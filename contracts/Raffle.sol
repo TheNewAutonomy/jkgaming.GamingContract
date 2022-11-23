@@ -39,11 +39,13 @@ contract Raffle is IGame, Game {
             currentPrize = endValue;
         }
 
+        // Reset LP's for next game
         for (uint i=0; i < liquidityProviders.length; i++) {
             delete lpExists[liquidityProviders[i]];
             delete liquidity[liquidityProviders[i]];
         }
 
+        // Reset Players for next game
         for (uint i=0; i < players.length; i++) {
             delete playerExists[players[i]];
             delete playerValue[players[i]];

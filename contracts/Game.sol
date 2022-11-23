@@ -2,13 +2,6 @@
 
 pragma solidity ^0.8.17;
 
-struct PrizeDraw
-{
-    address playerAddress;
-    uint startValue;
-    uint endValue;
-}
-
 interface IGame {
    function pickWinner() external;
 }
@@ -17,13 +10,13 @@ abstract contract Game {
     address public manager;
 
     // Liquidity providers
-    mapping(address => bool) public lpExists; // default value for each key is false
-    mapping(address => uint) public liquidity; // default value for each key is false
+    mapping(address => bool) public lpExists; // Has this lp address already been added to game?
+    mapping(address => uint) public liquidity; // LP address and liquidity loaded
     address[] liquidityProviders;
 
     // Players
-    mapping(address => bool) public playerExists; // default value for each key is false
-    mapping(address => uint) public playerValue; // default value for each key is false
+    mapping(address => bool) public playerExists; // Has this player address already been added to game?
+    mapping(address => uint) public playerValue; // Player address and stake
     address[] players;
 
     constructor() {
