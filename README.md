@@ -1,5 +1,42 @@
 # jkgaming.GamingContract
-Contracts for the JKGaming project
+# <img src="logo.png" alt="JK Gaming" height="128px">
+
+JK Gaming is a DeFi gaming project which pays out high fees to liquidity providers that support games funded through the JK Gaming project.
+
+There is a well understood problem in gaming that players play games with the biggest prizes but large prizes are made possible by having large numbers of players. How do you create a new game that attracts players in sufficient numbers without the liquidity in place from players to begin with?
+
+JK Gaming tackles this problem by inviting liquidity providers to stake liquidity into gaming pools which creates a seed fund for players while creating a high return back to those liquidity providers.
+
+This repository contains the core contract set written in Solidity.
+
+
+## Contracts
+
+Active development occurs in this repository, which means some contracts in it might not be production-ready. Proceed with caution.
+
+- [`Game.sol`](./conttracts): Abstract base class containing common functions to all games.
+- [`Raffle.sol`](./contractts): Raffle implementation with random number generator.
+
+## Build and Test
+
+Before any tests can be run, the repository needs to be prepared:
+
+```bash
+$ npm install # install all dependencies
+```
+
+Most tests are standalone and simply require installation of dependencies and compilation.
+
+In order to run all tests (including those with extra dependencies), run:
+
+```bash
+$ npm run test
+```
+
+## Licensing
+
+Most of the Solidity source code is licensed under the GNU General Public License Version 3 (GPL v3): see [`LICENSE`](./LICENSE).
+
 
 ## What is the JK Gaming project?
 
