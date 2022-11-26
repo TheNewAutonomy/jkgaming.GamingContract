@@ -2,9 +2,9 @@
 
 pragma solidity ^0.8.17;
 
-import "./Game.sol";
+import "./gametypes/LiquidPoolGame.sol";
 
-contract Raffle is IGame, Game {
+contract Raffle is IGame, LiquidPoolGame {
     // Initializing the state variable
     uint randNonce = 0;
 

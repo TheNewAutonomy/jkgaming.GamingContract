@@ -15,8 +15,6 @@ abstract contract Game {
     address[] liquidityProviders;
 
     // Players
-    mapping(address => bool) public playerExists; // Has this player address already been added to game?
-    mapping(address => uint) public playerValue; // Player address and stake
     address[] players;
 
     constructor() {
@@ -34,19 +32,6 @@ abstract contract Game {
         {
             liquidity[msg.sender] = liquidity[msg.sender] + msg.value;
         }
-    }
-
-    function enter() public valueProvided payable {
-        if (playerExists[msg.sender] == false)
-        {
-            playerExists[msg.sender] = true;
-            playerValue[msg.sender] = msg.value;
-            players.push(msg.sender);
-        }
-        else
-        {
-            playerValue[msg.sender] = playerValue[msg.sender] + msg.value;
-        }     
     }
     
     modifier valueProvided() {
