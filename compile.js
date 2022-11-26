@@ -2,26 +2,26 @@ const path = require('path');
 const fs = require('fs');
 const solc = require('solc');
 
-const gamePath = path.resolve(__dirname, 'contracts', 'Game.sol');
+const gamePath = path.resolve(__dirname, 'contracts/gametypes', 'Game.sol');
 const gameSource = fs.readFileSync(gamePath, 'utf8');
 
-const liquidPoolGamePath = path.resolve(__dirname, 'contracts/gametypes', 'LiquidPoolGame.sol');
-const liquidPoolGameSource = fs.readFileSync(liquidPoolGamePath, 'utf8');
+const analogGamePath = path.resolve(__dirname, 'contracts/gametypes', 'AnalogGame.sol');
+const analogGameSource = fs.readFileSync(analogGamePath, 'utf8');
 
-const rafflePath = path.resolve(__dirname, 'contracts', 'Raffle.sol');
-const raffleSource = fs.readFileSync(rafflePath, 'utf8');
+const ethStakingGamePath = path.resolve(__dirname, 'contracts', 'ETHStakingGame.sol');
+const ethStakingGameSource = fs.readFileSync(ethStakingGamePath, 'utf8');
  
 const input = {
   language: 'Solidity',
   sources: {
-    'Game.sol': {
+    'gametypes/Game.sol': {
       content: gameSource,
     },
-    'gametypes/LiquidPoolGame.sol': {
-      content: liquidPoolGameSource,
+    'gametypes/AnalogGame.sol': {
+      content: analogGameSource,
     },
-    'Raffle.sol': {
-      content: raffleSource,
+    'ETHStakingGame.sol': {
+      content: ethStakingGameSource,
     },
   },
   settings: {
@@ -34,5 +34,5 @@ const input = {
 };
  
 module.exports = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
-  'Game.sol', 'LiquidPoolGame.sol', 'Raffle.sol'
-].Raffle;
+  'Game.sol', 'AnalogGame.sol', 'ETHStakingGame.sol'
+].ETHStakingGame;

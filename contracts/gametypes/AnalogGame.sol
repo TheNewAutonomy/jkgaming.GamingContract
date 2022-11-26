@@ -3,9 +3,9 @@
 
 pragma solidity ^0.8.17;
 
-import "../Game.sol";
+import "./Game.sol";
 
-abstract contract LiquidPoolGame is IGame, Game {
+abstract contract AnalogGame is Game {
     // Players
     mapping(address => bool) public playerExists; // Has this player address already been added to game?
     mapping(address => uint) public playerValue; // Player address and stake

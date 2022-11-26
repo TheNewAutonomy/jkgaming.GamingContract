@@ -5,31 +5,32 @@ const web3 = new Web3(ganache.provider());
  
 const { abi, evm } = require('../compile');
 
-let raffle;
+let ethStakingGame;
 let accounts;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
-    raffle = await new web3.eth.Contract(abi)
+    ethStakingGame = await new web3.eth.Contract(abi)
     .deploy({
-      data: evm.bytecode.object
+      data: evm.bytecode.object,
+      arguments: [1]
     })
     .send({ from: accounts[0], gas: '2000000' });
 })
 
-describe('Raffle Contract', () => {
+describe('EthStakingGame Contract', () => {
     it('deploys a contract', () => {
-        assert.ok(raffle.options.address);
+        assert.ok(ethStakingGame.options.address);
     })
 
     it('allows one account to enter', async () => {
-        await raffle.methods.enter().send({
+        await ethStakingGame.methods.enter().send({
             from: accounts[0],
             gas: '2000000',
             value: web3.utils.toWei('0.02', 'ether')
         });
 
-        const players = await raffle.methods.getPlayers().call({
+        const players = await ethStakingGame.methods.getPlayers().call({
             from: accounts[0]
         });
 
@@ -38,25 +39,25 @@ describe('Raffle Contract', () => {
     });
 
     it('allows multiple account to enter', async () => {
-        await raffle.methods.enter().send({
+        await ethStakingGame.methods.enter().send({
             from: accounts[0],
             gas: '2000000',
             value: web3.utils.toWei('0.02', 'ether')
         });
 
-        await raffle.methods.enter().send({
+        await ethStakingGame.methods.enter().send({
             from: accounts[1],
             gas: '2000000',
             value: web3.utils.toWei('0.02', 'ether')
         });
 
-        await raffle.methods.enter().send({
+        await ethStakingGame.methods.enter().send({
             from: accounts[2],
             gas: '2000000',
             value: web3.utils.toWei('0.02', 'ether')
         });
 
-        const players = await raffle.methods.getPlayers().call({
+        const players = await ethStakingGame.methods.getPlayers().call({
             from: accounts[0]
         });
 
@@ -68,7 +69,7 @@ describe('Raffle Contract', () => {
 
     it('requires a minimum amount of ether to enter', async () => {
         try {
-            await raffle.methods.enter().send({
+            await ethStakingGame.methods.enter().send({
                 from: accounts[0],
                 value: 200
             });
@@ -80,7 +81,7 @@ describe('Raffle Contract', () => {
 
     it('only manager can call pickWinner', async () => {
         try {
-            await raffle.methods.pickWinner().send({
+            await ethStakingGame.methods.pickWinner().send({
                 from: accounts[1]
             });
             assert(false);
@@ -90,7 +91,7 @@ describe('Raffle Contract', () => {
     });
 
     it('sends money to the winner and resets the player array', async () => {
-            await raffle.methods.enter().send({
+            await ethStakingGame.methods.enter().send({
                 from: accounts[0],
                 gas: '2000000',
                 value: web3.utils.toWei('2', 'ether')
@@ -98,7 +99,7 @@ describe('Raffle Contract', () => {
             
             const initialBalance = await web3.eth.getBalance(accounts[0]);
 
-            await raffle.methods.pickWinner().send({ from: accounts[0], gas: '2000000', });
+            await ethStakingGame.methods.pickWinner().send({ from: accounts[0], gas: '2000000', });
 
             const finalBalance = await web3.eth.getBalance(accounts[0]);
 

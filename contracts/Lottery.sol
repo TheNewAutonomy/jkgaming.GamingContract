@@ -2,11 +2,13 @@
 
 pragma solidity ^0.8.17;
 
-import "./gametypes/Lottery.sol";
+import "./gametypes/DigitalGame.sol";
 
-contract GrandLottery is IGame, Lottery {
+contract Lottery is DigitalGame {
     // Initializing the state variable
     uint randNonce = 0;
+
+    constructor(uint range, uint _minWei) DigitalGame(range, _minWei) {}
 
     function random() private view returns (uint) {
         return uint(keccak256(abi.encodePacked(block.timestamp,

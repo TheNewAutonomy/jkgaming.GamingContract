@@ -6,7 +6,7 @@ interface IGame {
    function pickWinner() external;
 }
 
-abstract contract Game {
+abstract contract Game is IGame {
     address public manager;
 
     // Liquidity providers
@@ -17,7 +17,11 @@ abstract contract Game {
     // Players
     address[] players;
 
-    constructor() {
+    // Minimum stake amount in ETH
+    uint minWei;
+
+    constructor(uint _minWei) {
+        minWei = _minWei;
         manager = msg.sender;
     }
     
@@ -35,7 +39,7 @@ abstract contract Game {
     }
     
     modifier valueProvided() {
-        require(msg.value > .01 ether);
+        require(msg.value > minWei);
         _;
     }
 
