@@ -16,7 +16,7 @@ contract GrandLottery is IGame, Lottery {
 
     function pickWinner() public restricted {
         uint index = random() % players.length;
-        payable(players[i]).transfer(address(this).balance);
+        payable(players[index]).transfer(address(this).balance);
         players = new address[](0);
     }
 }
