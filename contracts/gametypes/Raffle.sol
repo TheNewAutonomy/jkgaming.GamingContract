@@ -2,13 +2,22 @@
 
 pragma solidity ^0.8.17;
 
-import "./gametypes/DigitalGame.sol";
+import "./Game.sol";
 
-contract Raffle is DigitalGame {
+contract Raffle is Game {
     // Initializing the state variable
     uint randNonce = 0;
 
-    constructor(uint range, uint _minWei) DigitalGame(range, _minWei) {}
+    uint[] items;
+
+    constructor(uint range, uint _minWei) Game(_minWei) {
+        items = new uint[](++range);
+    }
+
+    function enter() public valueProvided payable {
+        // TODO: Count how much was paid and enter n number of times
+        players.push(msg.sender);
+    }
 
     function random() private view returns (uint) {
         return uint(keccak256(abi.encodePacked(block.timestamp,
