@@ -14,8 +14,12 @@ This repository contains the core contract set written in Solidity.
 
 Active development occurs in this repository, which means some contracts in it might not be production-ready. Proceed with caution.
 
-- [`Game.sol`](./conttracts): Abstract base class containing common functions to all games.
-- [`Raffle.sol`](./contractts): Raffle implementation with random number generator.
+- [`Game.sol`](./conttracts/gametypes): Abstract base class containing common functions to all games.
+- [`AnalogGame.sol`](./conttracts/gametypes): Abstract class for games that are non-binary for staking. i.e. Stake 3 ETH for twice the chance to win than staking 1.5 ETH, or any amount of ETH
+- [`DigitalGame.sol`](./conttracts/gametypes): Abstract class for games that require entry tickets. i.e. A lottery ticket or sports game betting slip
+- [`Raffle.sol`](./conttracts/gametypes): Game similar to a digital game except a very simple buy one ticket for one random entry
+- [`ETHStakingGame.sol`](./conttracts): Reference game using the AnalogGame class. Send any amount of ETH to the game to enter. The more ETH sent, the greater your chance of winning
+- [`Lottery.sol`](./conttracts): Refrence game using the DigitalGame based on a lottery. Pick n numbers depending on the game configuration and if you match all numbers when they're drawn, you receive the payout.
 
 ## Build and Test
 
@@ -61,7 +65,19 @@ Players stake gaming money into the game in the hope of winning the prize. The m
 The pickWinner function can contain any logic that the game maker chooses. It could choose a winner based on a random number, on an oracle reporting on a sporting event or on anything else. We will start with simple games but will work with game makers on more complicated and fun gaming strategies.
 
 ## Gaming experience for LP's
-For LP's we will provide a UI familiar to anyone who invests in DeFi pools such as Symmetric, Balancer or Uniswap. LP's can see a list of running games, the risks for each game, the pool size, the projected returns and other information. Once liquidity is added, it can't be removed until the game runs. At that point, the LP is automatically paid along with the game winners
+LPs will be provided with a familiar pool staking interface either using the Symmetric project or a new but similar interface. For an LP the experience is familiar to anyone who's added liquidity to pools in projects such as Symemtric, Balancer or Uniswap. Games are presented as pools to which liquidity is staked for the duration of the game. Viewing the game pool details shows details about the game including the rules of the game, payouts logic, time over which the game will run and predicted returns. Unlike pools in Symmetric, only a single token is staked and as such, the pools are not incorporated into the exchange. All liquidity in the pool whether from liquidity providers or players is intended for LPs and players with a small fee going back to the game operators.
 
 ## Gaming experience for players
 We will provide a simple gaming experience for players but it is hoped that game makers will provide their own individual gaming experiences to their players. Current gaming companies can integrate JK Gaming as a service into their own mobile or web app while new gaming projects can build entirely new gaming experiences for their own market.
+
+## How is the payout divided?
+The division of payouts depends on the game and is configured by the game maker. For example, a game may split returns between the player prize and LPs 50/50 or may include more complex logic such as paying LPs first on their investment then the player after along a calculated split.
+
+In every case, 2% is reserved to the JK Gaming founders for continued support and development of the JK project. There is no token associated to the JK project, its only return to the developers and team is from future returns from games.
+
+# Status
+This project is work in progress. The game contracts require further work to provide game makers with a selection of games to build on, as well as some core games to be launched to start the gaming market. These contracts are very much work in progress and we are building out the test suite for all contracts.
+
+We will be adding proxy contracts using a factory cloning pattern shortly to allow multiple concurrent games for each game contract to be run.
+
+We also need to publish the UI which may be integrated into the Symmetric pools dashboard or may be a new interface.
